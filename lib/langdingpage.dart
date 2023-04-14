@@ -1,4 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'mainpage.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
@@ -9,6 +14,14 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage> {
   @override
+  void initState() {
+    Timer(Duration(seconds: 3), () {
+      Get.offAll(MainPage());
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -18,13 +31,20 @@ class _LandingPageState extends State<LandingPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 150,
-                height: 150,
-                child: Image.asset("assets/images/img.png"),
+                width: 100,
+                height: 100,
+                child: Image.asset("assets/images/salute.png"),
               ),
               Container(
                 child: Text("헤쳐모여"),
-              )
+              ),
+              Container(
+                child: Text("모임 관리 어플리케이션"),
+              ),
+              Container(
+                height: 100,
+              ),
+              CircularProgressIndicator()
             ],
           ),
         ),
