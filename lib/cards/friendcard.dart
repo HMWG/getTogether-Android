@@ -24,7 +24,8 @@ class _FriendCardState extends State<FriendCard> {
                   //Colors.primaries[Random().nextInt(Colors.primaries.length)],
                   Colors.transparent,
               border: Border(
-                  bottom: BorderSide(width: 0.5, color: Colors.black12))),
+                bottom: BorderSide(width: 0.5, color: Colors.black12),
+              )),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -38,7 +39,9 @@ class _FriendCardState extends State<FriendCard> {
                   SizedBox(
                     width: 10,
                   ),
-                  Text("친구이름 " + widget.number.toString())
+                  Container(
+                    child: Text("친구이름 " + widget.number.toString()),
+                  )
                 ],
               ),
             ],

@@ -65,25 +65,25 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          appBarText,
-          style: TextStyle(
-              fontFamily: "yeonSung", fontSize: 25, color: Colors.black),
-        ),
-        centerTitle: false,
-        elevation: 0.0,
-        actions: [
-          IconButton(
-              onPressed: () {
-                setState(() {
-                  selectedIndex = 2;
-                  appBarText = "관리";
-                });
-              },
-              icon: Icon(Icons.menu))
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: Text(
+      //     appBarText,
+      //     style: TextStyle(
+      //         fontFamily: "yeonSung", fontSize: 25, color: Colors.black),
+      //   ),
+      //   centerTitle: false,
+      //   elevation: 0.0,
+      //   actions: [
+      //     IconButton(
+      //         onPressed: () {
+      //           setState(() {
+      //             selectedIndex = 2;
+      //             appBarText = "관리";
+      //           });
+      //         },
+      //         icon: Icon(Icons.menu))
+      //   ],
+      // ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.lightGreenAccent,
@@ -95,17 +95,17 @@ class _MainPageState extends State<MainPage> {
         onTap: (int index) {
           setState(() {
             selectedIndex = index;
-            switch (selectedIndex) {
-              case 0:
-                appBarText = "친구";
-                break;
-              case 1:
-                appBarText = "메인페이지(헤쳐모여)";
-                break;
-              case 2:
-                appBarText = "관리";
-                break;
-            }
+            // switch (selectedIndex) {
+            //   case 0:
+            //     appBarText = "친구";
+            //     break;
+            //   case 1:
+            //     appBarText = "메인페이지(헤쳐모여)";
+            //     break;
+            //   case 2:
+            //     appBarText = "관리";
+            //     break;
+            // }
           });
         },
         showSelectedLabels: false,
