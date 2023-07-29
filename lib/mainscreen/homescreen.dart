@@ -12,6 +12,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String name = "민우";
+  int meetingNum = 0;
+  int myMeetingNum = 5;
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +30,13 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: Colors.white,
           actions: [IconButton(onPressed: () {}, icon: Icon(Icons.menu))],
         ),
-        body: SingleChildScrollView(
+        body: Container(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
               width: double.infinity,
-              height: 170,
+              height: 160,
               padding: EdgeInsets.fromLTRB(40, 40, 0, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,26 +61,106 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Container(
               width: double.infinity,
-              height: 10,
+              height: 7,
               color: Color(0xffF6F6F6),
             ),
-            Container(
-              width: double.infinity,
-              height: 500,
-              child: ContainedTabBarView(
-                tabs: [
-                  Text('내가 만든 모임'),
-                  Text('나를 초대한 모임'),
-                ],
-                views: [
-                  Container(
-                    color: Colors.white60,
-                    child: MeetingCard(),
-                  ),
-                  Container(color: Colors.green)
-                ],
-                onChange: (index) => print(index),
-              ),
+            Expanded(
+              child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: ContainedTabBarView(
+                    tabs: [
+                      Text('나의 모임'),
+                      Text('내가 만든 모임'),
+                    ],
+                    views: [
+                      Container(
+                        color: Colors.white60,
+                        child: meetingNum != 0
+                            ? ListView.builder(
+                                itemCount: meetingNum,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return MeetingCard();
+                                })
+                            : Container(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      name + '님이 속한 모임이 없습니다.',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 1.0),
+                                    ),
+                                    Text(
+                                      '모임을 만들어보세요!',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 1.0),
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    ElevatedButton(
+                                        onPressed: null,
+                                        child: Text(
+                                          '모임 만들기',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              letterSpacing: 1.0),
+                                        ))
+                                  ],
+                                ),
+                              ),
+                      ),
+                      Container(
+                        color: Colors.white60,
+                        child: myMeetingNum != 0
+                            ? ListView.builder(
+                                itemCount: myMeetingNum,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return MeetingCard();
+                                })
+                            : Container(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      '내가 만든 모임이 없습니다.',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 1.0),
+                                    ),
+                                    Text(
+                                      '모임을 만들어보세요!',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 1.0),
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    ElevatedButton(
+                                        onPressed: null,
+                                        child: Text(
+                                          '모임 만들기',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              letterSpacing: 1.0),
+                                        ))
+                                  ],
+                                ),
+                              ),
+                      ),
+                    ],
+                    onChange: (index) => print(index),
+                  )),
             )
           ],
         )));
