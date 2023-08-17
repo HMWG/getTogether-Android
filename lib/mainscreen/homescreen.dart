@@ -1,6 +1,7 @@
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get_together_android/cards/meetingcard.dart';
+import 'package:get_together_android/createmeetingscreen/meetinginfoscreen.dart';
 import 'package:get_together_android/mainscreen/tabscreen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -146,7 +147,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       height: 15,
                                     ),
                                     ElevatedButton(
-                                        onPressed: null,
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    MeetingInfoScreen()),
+                                          );
+                                        },
                                         child: Text(
                                           '모임 만들기',
                                           style: TextStyle(
