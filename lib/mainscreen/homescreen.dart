@@ -29,7 +29,18 @@ class _HomeScreenState extends State<HomeScreen> {
           centerTitle: false,
           elevation: 0.5,
           backgroundColor: Colors.white,
-          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.menu))],
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MeetingInfoScreen()),
+                  );
+                },
+                icon: Icon(Icons.add)),
+            IconButton(onPressed: () {}, icon: Icon(Icons.menu))
+          ],
         ),
         body: Container(
             child: Column(
@@ -71,8 +82,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: double.infinity,
                   child: ContainedTabBarView(
                     tabs: [
-                      Text('나의 모임'),
-                      Text('내가 만든 모임'),
+                      Container(
+                        height: 80,
+                        alignment: Alignment.center,
+                        child: Text(
+                          '나의 모임',
+                        ),
+                      ),
+                      Container(
+                        height: 80,
+                        alignment: Alignment.center,
+                        child: Text(
+                          '내가 만든 모임',
+                        ),
+                      ),
                     ],
                     views: [
                       Container(
@@ -105,7 +128,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       height: 15,
                                     ),
                                     ElevatedButton(
-                                        onPressed: null,
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    MeetingInfoScreen()),
+                                          );
+                                        },
                                         child: Text(
                                           '모임 만들기',
                                           style: TextStyle(

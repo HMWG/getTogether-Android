@@ -33,7 +33,7 @@ class _MeetingInfoScreenState extends State<MeetingInfoScreen> {
                 children: [
                   Text('모임 정보를 입력해주세요',
                       style: TextStyle(
-                          fontSize: 28,
+                          fontSize: 24,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 1.0)),
                   SizedBox(
