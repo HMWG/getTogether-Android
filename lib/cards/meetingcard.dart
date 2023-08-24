@@ -24,6 +24,7 @@ class _MeetingCardState extends State<MeetingCard> {
             ),
           ),
           padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          margin: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
           child: Column(
             children: [
               Container(
@@ -40,6 +41,8 @@ class _MeetingCardState extends State<MeetingCard> {
                           decoration: BoxDecoration(
                               color: Colors.red,
                               borderRadius: BorderRadius.circular(10)),
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.all(3),
                         ),
                       ],
                     ),

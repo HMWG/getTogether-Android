@@ -41,13 +41,12 @@ class _MeetingInfoScreenState extends State<MeetingInfoScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(30.0),
+          padding: EdgeInsets.all(0.0),
           child: Column(
             children: [
               Container(
                 width: double.infinity,
-                height: 160,
-                padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                padding: EdgeInsets.fromLTRB(40, 60, 0, 60),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -67,240 +66,268 @@ class _MeetingInfoScreenState extends State<MeetingInfoScreen> {
               ),
               Container(
                 width: double.infinity,
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '닉네임',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
+                height: 7,
+                color: Color(0xffF6F6F6),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: '닉네임을 입력해주세요',
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Container(
-                width: double.infinity,
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '모임 이름',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: '모임 이름을 입력해주세요',
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Container(
-                width: double.infinity,
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '모임 설명 (선택사항)',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: '모임 설명을 입력해주세요',
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Container(
-                width: double.infinity,
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '모임 시간',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Column(children: [
-                Container(
-                  padding: EdgeInsets.fromLTRB(15, 0, 10, 0),
-                  height: 50,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(5),
-                          topRight: Radius.circular(5)),
-                      border: Border.all(color: Colors.grey, width: 1)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '시작 시간',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                      TextButton(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              startTime,
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              ' 부터 ',
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            Icon(
-                              Icons.keyboard_arrow_down,
-                              color: Colors.black,
-                            ),
-                          ],
-                        ),
-                        onPressed: () {
-                          Future<TimeOfDay?> selectedTime = showTimePicker(
-                            context:
-                                context, // context 는 Future 타입으로 TimeOfDay 타입의 값을 반환 합니다
-                            initialTime: TimeOfDay.now(), // 프로퍼티에 초깃값을 지정합니다.
-                          );
-                          selectedTime.then((value) {
-                            setState(() {
-                              startTime = '${value?.hour} : ${value?.minute}';
-                            });
-                          });
-                        },
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(15, 0, 10, 0),
-                  height: 50,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(5),
-                          bottomRight: Radius.circular(5)),
-                      border: Border(
-                          left: BorderSide(color: Colors.grey, width: 1),
-                          right: BorderSide(color: Colors.grey, width: 1),
-                          bottom: BorderSide(color: Colors.grey, width: 1),
-                          top: BorderSide(color: Colors.grey, width: 1))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '종료 시간',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                      TextButton(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              endTime,
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              ' 까지 ',
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            Icon(
-                              Icons.keyboard_arrow_down,
-                              color: Colors.black,
-                            ),
-                          ],
-                        ),
-                        onPressed: () {
-                          Future<TimeOfDay?> selectedTime = showTimePicker(
-                            context:
-                                context, // context 는 Future 타입으로 TimeOfDay 타입의 값을 반환 합니다
-                            initialTime: TimeOfDay.now(), // 프로퍼티에 초깃값을 지정합니다.
-                          );
-                          selectedTime.then((value) {
-                            setState(() {
-                              endTime = '${value?.hour} : ${value?.minute}';
-                            });
-                          });
-                        },
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  width: double.infinity,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '중간장소 추천',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                ToggleButtons(
-                  color: Colors.black.withOpacity(0.60),
-                  selectedColor: Colors.lightGreen,
-                  selectedBorderColor: Colors.lightGreen,
-                  fillColor: Colors.lightGreen.withOpacity(0.08),
-                  splashColor: Colors.lightGreen.withOpacity(0.12),
-                  hoverColor: Colors.lightGreen.withOpacity(0.04),
-                  borderRadius: BorderRadius.circular(4.0),
-                  constraints: BoxConstraints(minHeight: 36.0),
-                  isSelected: isSelected,
-                  onPressed: toggleSelect,
+              Padding(
+                padding: EdgeInsets.all(30),
+                child: Column(
                   children: [
                     Container(
-                      alignment: Alignment.center,
-                      width: 150,
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      width: double.infinity,
+                      alignment: Alignment.centerLeft,
                       child: Text(
-                        '필요해요',
+                        '닉네임',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: '닉네임을 입력해주세요',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
                     ),
                     Container(
-                      alignment: Alignment.center,
-                      width: 150,
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      width: double.infinity,
+                      alignment: Alignment.centerLeft,
                       child: Text(
-                        '다음에 받을래요',
+                        '모임 이름',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                     ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: '모임 이름을 입력해주세요',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        '모임 설명 (선택사항)',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: '모임 설명을 입력해주세요',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        '모임 시간',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Column(children: [
+                      Container(
+                        padding: EdgeInsets.fromLTRB(15, 0, 10, 0),
+                        height: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(5),
+                                topRight: Radius.circular(5)),
+                            border: Border.all(color: Colors.grey, width: 1)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '시작 시간',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
+                            TextButton(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    startTime,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    ' 부터 ',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  ),
+                                  Icon(
+                                    Icons.keyboard_arrow_down,
+                                    color: Colors.black,
+                                  ),
+                                ],
+                              ),
+                              onPressed: () {
+                                Future<TimeOfDay?> selectedTime =
+                                    showTimePicker(
+                                  context:
+                                      context, // context 는 Future 타입으로 TimeOfDay 타입의 값을 반환 합니다
+                                  initialTime:
+                                      TimeOfDay.now(), // 프로퍼티에 초깃값을 지정합니다.
+                                );
+                                selectedTime.then((value) {
+                                  setState(() {
+                                    startTime =
+                                        '${value?.hour} : ${value?.minute}';
+                                  });
+                                });
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(15, 0, 10, 0),
+                        height: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(5),
+                                bottomRight: Radius.circular(5)),
+                            border: Border(
+                                left: BorderSide(color: Colors.grey, width: 1),
+                                right: BorderSide(color: Colors.grey, width: 1),
+                                bottom:
+                                    BorderSide(color: Colors.grey, width: 1),
+                                top: BorderSide(color: Colors.grey, width: 1))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '종료 시간',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
+                            TextButton(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    endTime,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    ' 까지 ',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  ),
+                                  Icon(
+                                    Icons.keyboard_arrow_down,
+                                    color: Colors.black,
+                                  ),
+                                ],
+                              ),
+                              onPressed: () {
+                                Future<TimeOfDay?> selectedTime =
+                                    showTimePicker(
+                                  context:
+                                      context, // context 는 Future 타입으로 TimeOfDay 타입의 값을 반환 합니다
+                                  initialTime:
+                                      TimeOfDay.now(), // 프로퍼티에 초깃값을 지정합니다.
+                                );
+                                selectedTime.then((value) {
+                                  setState(() {
+                                    endTime =
+                                        '${value?.hour} : ${value?.minute}';
+                                  });
+                                });
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '중간장소 추천',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      ToggleButtons(
+                        color: Colors.black.withOpacity(0.60),
+                        selectedColor: Colors.lightGreen,
+                        selectedBorderColor: Colors.lightGreen,
+                        fillColor: Colors.lightGreen.withOpacity(0.08),
+                        splashColor: Colors.lightGreen.withOpacity(0.12),
+                        hoverColor: Colors.lightGreen.withOpacity(0.04),
+                        borderRadius: BorderRadius.circular(4.0),
+                        constraints: BoxConstraints(minHeight: 36.0),
+                        isSelected: isSelected,
+                        onPressed: toggleSelect,
+                        children: [
+                          Container(
+                            alignment: Alignment.center,
+                            width: 150,
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Text(
+                              '필요해요',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            width: 150,
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Text(
+                              '다음에 받을래요',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 30,
+                      )
+                    ])
                   ],
                 ),
-                SizedBox(
-                  height: 30,
-                )
-              ])
+              ),
             ],
           ),
         ),
@@ -316,7 +343,7 @@ class _MeetingInfoScreenState extends State<MeetingInfoScreen> {
             );
           },
           child: Text(
-            '선택 완료',
+            '입력 완료',
             style: TextStyle(
                 fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
           ),
