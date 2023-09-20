@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MeetingCard extends StatefulWidget {
   const MeetingCard({Key? key}) : super(key: key);
@@ -9,13 +10,22 @@ class MeetingCard extends StatefulWidget {
 }
 
 class _MeetingCardState extends State<MeetingCard> {
+  var meetingName = 'Ourmeeting 회의';
+  //DateFormat dateFormat = DateFormat('aa hh:mm','ko');
+  var d = DateTime.now();
+  var t = TimeOfDay.now();
+  String startTime = DateFormat('aa hh:mm', 'ko').format(DateTime.now());
+  String endTime = DateFormat('aa hh:mm', 'ko').format(DateTime.now());
+  String meetingDate = DateFormat('M월 d일 E요일', 'ko').format(DateTime.now());
+  var meetingStatus = '진행중';
+  var member = 5;
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: InkWell(
         child: Container(
-          width: 350,
-          height: 215,
+          height: 230,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
@@ -31,25 +41,33 @@ class _MeetingCardState extends State<MeetingCard> {
                 child: Column(
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
                           child: Text(
-                            "진행중",
+                            meetingStatus,
                             style: TextStyle(color: Colors.white, fontSize: 12),
                             textAlign: TextAlign.left,
                           ),
                           decoration: BoxDecoration(
                               color: Colors.red,
                               borderRadius: BorderRadius.circular(10)),
-                          alignment: Alignment.center,
+                          alignment: Alignment.bottomLeft,
                           padding: EdgeInsets.all(3),
+                        ),
+                        Container(
+                          alignment: Alignment.centerRight,
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.more_vert),
+                          ),
                         ),
                       ],
                     ),
                     Row(
                       children: [
                         Text(
-                          "Ourmeeting 회의",
+                          meetingName,
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.left,
@@ -76,7 +94,7 @@ class _MeetingCardState extends State<MeetingCard> {
                   SizedBox(
                     width: 20,
                   ),
-                  Text("1월 1일 월요일")
+                  Text(meetingDate)
                 ],
               ),
               SizedBox(
@@ -88,7 +106,7 @@ class _MeetingCardState extends State<MeetingCard> {
                   SizedBox(
                     width: 20,
                   ),
-                  Text("오후 1:00 ~ 오후 2:00")
+                  Text(startTime + " ~ " + endTime)
                 ],
               ),
               SizedBox(
@@ -100,7 +118,7 @@ class _MeetingCardState extends State<MeetingCard> {
                   SizedBox(
                     width: 20,
                   ),
-                  Text("5명")
+                  Text(member.toString() + '명')
                 ],
               )
             ],

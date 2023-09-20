@@ -65,7 +65,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
+      // appBar: AppBar(2
       //   title: Text(
       //     appBarText,
       //     style: TextStyle(

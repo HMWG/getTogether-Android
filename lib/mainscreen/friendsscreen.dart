@@ -30,7 +30,11 @@ class _FriendsScreenState extends State<FriendsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            child: Text("친구: " + num.toString()),
+            padding: EdgeInsets.fromLTRB(15, 3, 3, 3),
+            child: Text(
+              "친구 - " + num.toString() + "명",
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            ),
           ),
           Container(
             child: Expanded(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_together_android/createmeetingscreen/meetingdatescreen.dart';
+import 'package:intl/intl.dart';
 
 class MeetingInfoScreen extends StatefulWidget {
   const MeetingInfoScreen({super.key});
@@ -20,8 +21,8 @@ class _MeetingInfoScreenState extends State<MeetingInfoScreen> {
     isSelected = [isNeed, isNext];
     var now = TimeOfDay.now();
 
-    startTime = '${now?.hour} : ${now?.minute}';
-    endTime = '${now?.hour} : ${now?.minute}';
+    startTime = DateFormat('aa hh:mm', 'ko').format(DateTime.now());
+    endTime = DateFormat('aa hh:mm', 'ko').format(DateTime.now());
 
     super.initState();
   }
@@ -199,8 +200,15 @@ class _MeetingInfoScreenState extends State<MeetingInfoScreen> {
                                 );
                                 selectedTime.then((value) {
                                   setState(() {
-                                    startTime =
-                                        '${value?.hour} : ${value?.minute}';
+                                    DateTime start;
+                                    if (value != null)
+                                      start = DateTime(
+                                          0, 0, 0, value.hour, value.minute);
+                                    else
+                                      start = DateTime.now();
+                                    startTime = DateFormat('aa hh:mm', 'ko')
+                                        .format(DateTime(
+                                            0, 0, 0, start.hour, start.minute));
                                   });
                                 });
                               },
@@ -263,8 +271,15 @@ class _MeetingInfoScreenState extends State<MeetingInfoScreen> {
                                 );
                                 selectedTime.then((value) {
                                   setState(() {
-                                    endTime =
-                                        '${value?.hour} : ${value?.minute}';
+                                    DateTime end;
+                                    if (value != null)
+                                      end = DateTime(
+                                          0, 0, 0, value.hour, value.minute);
+                                    else
+                                      end = DateTime.now();
+                                    endTime = DateFormat('aa hh:mm', 'ko')
+                                        .format(DateTime(
+                                            0, 0, 0, end.hour, end.minute));
                                   });
                                 });
                               },

@@ -40,10 +40,15 @@ class _FriendCardState extends State<FriendCard> {
                     width: 10,
                   ),
                   Container(
-                    child: Text("친구이름 " + widget.number.toString()),
+                    child: Text(
+                      "친구이름 " + (widget.number + 1).toString(),
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    ),
                   )
                 ],
               ),
+              IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz))
             ],
           ),
         ),
