@@ -14,7 +14,7 @@ class _MeetingTimeCardState extends State<MeetingTimeCard> {
   var dayOfTheWeek = ['월', '화', '수'];
   var day = [11, 12, 13];
   var meetingTime = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-  List<int> timeList = [];
+  List<List<int>> timeList = [[], [], []];
   var btnColor = [
     [
       Colors.blue[50],
@@ -225,11 +225,11 @@ class _MeetingTimeCardState extends State<MeetingTimeCard> {
                             margin: EdgeInsets.symmetric(vertical: 3),
                             child: InkWell(
                                 onTap: () {
-                                  timeList.contains(meetingTime[i])
-                                      ? timeList.remove(meetingTime[i])
-                                      : timeList.add(meetingTime[i]);
+                                  timeList[0].contains(meetingTime[i])
+                                      ? timeList[0].remove(meetingTime[i])
+                                      : timeList[0].add(meetingTime[i]);
                                   setState(() {
-                                    timeList.contains(meetingTime[i])
+                                    timeList[0].contains(meetingTime[i])
                                         ? btnColor[0][i] =
                                             Colors.lightGreen[300]
                                         : btnColor[0][i] = btnSave[1][i];
@@ -253,11 +253,11 @@ class _MeetingTimeCardState extends State<MeetingTimeCard> {
                             margin: EdgeInsets.symmetric(vertical: 3),
                             child: InkWell(
                                 onTap: () {
-                                  timeList.contains(meetingTime[i])
-                                      ? timeList.remove(meetingTime[i])
-                                      : timeList.add(meetingTime[i]);
+                                  timeList[1].contains(meetingTime[i])
+                                      ? timeList[1].remove(meetingTime[i])
+                                      : timeList[1].add(meetingTime[i]);
                                   setState(() {
-                                    timeList.contains(meetingTime[i])
+                                    timeList[1].contains(meetingTime[i])
                                         ? btnColor[1][i] =
                                             Colors.lightGreen[300]
                                         : btnColor[1][i] = btnSave[1][i];
@@ -281,11 +281,11 @@ class _MeetingTimeCardState extends State<MeetingTimeCard> {
                             margin: EdgeInsets.symmetric(vertical: 3),
                             child: InkWell(
                                 onTap: () {
-                                  timeList.contains(meetingTime[i])
-                                      ? timeList.remove(meetingTime[i])
-                                      : timeList.add(meetingTime[i]);
+                                  timeList[2].contains(meetingTime[i])
+                                      ? timeList[2].remove(meetingTime[i])
+                                      : timeList[2].add(meetingTime[i]);
                                   setState(() {
-                                    timeList.contains(meetingTime[i])
+                                    timeList[2].contains(meetingTime[i])
                                         ? btnColor[2][i] =
                                             Colors.lightGreen[300]
                                         : btnColor[2][i] = btnSave[1][i];

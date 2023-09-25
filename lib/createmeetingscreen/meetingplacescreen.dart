@@ -1,8 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get_together_android/createmeetingscreen/meetingrecommendscreen.dart';
-import 'package:naver_map_plugin/naver_map_plugin.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MeetingPlaceScreen extends StatefulWidget {
   const MeetingPlaceScreen({super.key});
@@ -12,8 +13,27 @@ class MeetingPlaceScreen extends StatefulWidget {
 }
 
 class _MeetingPlaceScreenState extends State<MeetingPlaceScreen> {
-  Completer<NaverMapController> _controller = Completer();
-  MapType _mapType = MapType.Basic;
+  final Completer<GoogleMapController> _controller =
+      Completer<GoogleMapController>();
+
+  LatLng kangnamUniv = LatLng(
+      //위도와 경도 값 지정
+      37.277057,
+      127.134173);
+
+  static const CameraPosition initialPosition = CameraPosition(
+    target: LatLng(
+        //위도와 경도 값 지정
+        37.277057,
+        127.134173),
+    zoom: 15,
+  );
+
+  static const CameraPosition _kLake = CameraPosition(
+      bearing: 192.8334901395799,
+      target: LatLng(37.43296265331129, -122.08832357078792),
+      tilt: 59.440717697143555,
+      zoom: 19.151926040649414);
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +76,17 @@ class _MeetingPlaceScreenState extends State<MeetingPlaceScreen> {
             ),
           ),
           Container(
-            child: NaverMap(
-              onMapCreated: onMapCreated,
-              mapType: _mapType,
+            height: 500,
+            child: GoogleMap(
+              mapType: MapType.normal,
+              initialCameraPosition: initialPosition,
+              myLocationEnabled: true,
+              myLocationButtonEnabled: true,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
             ),
-          )
+          ),
         ],
       ),
       bottomNavigationBar: Container(
@@ -81,10 +107,5 @@ class _MeetingPlaceScreenState extends State<MeetingPlaceScreen> {
         ),
       ),
     );
-  }
-
-  void onMapCreated(NaverMapController controller) {
-    if (_controller.isCompleted) _controller = Completer();
-    _controller.complete(controller);
   }
 }

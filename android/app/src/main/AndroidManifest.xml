@@ -3,7 +3,8 @@
    <application
         android:label="헤쳐모여"
         android:name="${applicationName}"
-        android:icon="@mipmap/my_icon">
+        android:icon="@mipmap/my_icon"
+       android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -30,10 +31,13 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-       <meta-data
-           android:name="com.naver.maps.map.CLIENT_ID"
-           android:value="euvsx2hkkx" />
+
+
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyCpAOPCCHNdxVnZ4rfXm09dnznK6P5S5bs"/>
     </application>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
