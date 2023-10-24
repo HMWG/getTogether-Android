@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_together_android/createmeetingscreen/meetingplacegooglescreen.dart';
 import 'package:get_together_android/mainpage.dart';
 
 class ManageScreen extends StatefulWidget {
@@ -12,8 +13,21 @@ class _ManageScreenState extends State<ManageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Text("관리스크린"),
+      body: Column(
+        children: [
+          Container(
+            child: Text("관리스크린"),
+          ),
+          TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MeetingPlaceGoogleScreen()),
+                );
+              },
+              child: Text("테스트"))
+        ],
       ),
       appBar: AppBar(
         title: Text(

@@ -78,27 +78,6 @@ class _MeetingInfoScreenState extends State<MeetingInfoScreen> {
                       width: double.infinity,
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        '닉네임',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: '닉네임을 입력해주세요',
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      alignment: Alignment.centerLeft,
-                      child: Text(
                         '모임 이름',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
@@ -352,6 +331,7 @@ class _MeetingInfoScreenState extends State<MeetingInfoScreen> {
         color: Colors.lightGreen,
         child: TextButton(
           onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => MeetingDateScreen()),

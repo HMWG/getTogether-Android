@@ -41,10 +41,24 @@ class _MeetingInfoCardState extends State<MeetingInfoCard> {
                     onPressed: () {},
                     icon: Icon(Icons.share),
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.more_vert),
-                  ),
+                  Container(
+                      alignment: Alignment.centerRight,
+                      child: PopupMenuButton(itemBuilder: (context) {
+                        return [
+                          PopupMenuItem(
+                            child: Text('모임 수정'),
+                            onTap: () {
+                              print('삭제 선택');
+                            },
+                          ),
+                          PopupMenuItem(
+                            child: Text('삭제'),
+                            onTap: () {
+                              print('삭제 선택');
+                            },
+                          ),
+                        ];
+                      })),
                 ],
               ),
             ],

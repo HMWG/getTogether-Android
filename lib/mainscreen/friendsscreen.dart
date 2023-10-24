@@ -41,7 +41,8 @@ class _FriendsScreenState extends State<FriendsScreen> {
               child: ListView.builder(
                   itemCount: num,
                   itemBuilder: (BuildContext context, int index) {
-                    return FriendCard(number: index);
+                    return InkWell(
+                        onTap: () {}, child: FriendCard(number: index));
                   }),
             ),
           ),

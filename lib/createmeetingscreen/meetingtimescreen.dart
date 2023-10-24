@@ -61,14 +61,6 @@ class _MeetingTimeScreenState extends State<MeetingTimeScreen> {
             color: Color(0xffF6F6F6),
           ),
           Container(
-            child: MeetingInfoCard(),
-          ),
-          Container(
-            width: double.infinity,
-            height: 7,
-            color: Colors.blueGrey[50],
-          ),
-          Container(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
             child: Text(
@@ -86,10 +78,7 @@ class _MeetingTimeScreenState extends State<MeetingTimeScreen> {
         color: Colors.lightGreen,
         child: TextButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MeetingPlaceScreen()),
-            );
+            _showCheckTimeDialog(context);
           },
           child: Text(
             '입력 완료',
@@ -100,4 +89,32 @@ class _MeetingTimeScreenState extends State<MeetingTimeScreen> {
       ),
     );
   }
+}
+
+void _showCheckTimeDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          content: Text("입력 완료 되었습니다.\n팀원을 기다려주세요!"),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("수정하기")),
+            TextButton(
+                onPressed: () {
+                  //Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MeetingPlaceScreen()),
+                  );
+                },
+                child: Text("네"))
+          ],
+        );
+      });
 }

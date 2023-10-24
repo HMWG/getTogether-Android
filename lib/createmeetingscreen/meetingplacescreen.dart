@@ -2,8 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get_together_android/createmeetingscreen/meetingrecommendscreen.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:kakao_map_plugin/kakao_map_plugin.dart';
 
 class MeetingPlaceScreen extends StatefulWidget {
   const MeetingPlaceScreen({super.key});
@@ -12,31 +13,28 @@ class MeetingPlaceScreen extends StatefulWidget {
   State<MeetingPlaceScreen> createState() => _MeetingPlaceScreenState();
 }
 
+late var pos = LatLng(37.277057, 127.134173);
+
+Future<void> getCurrentLocation() async {
+  Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high);
+
+  pos = LatLng(position.latitude, position.longitude);
+}
+
 class _MeetingPlaceScreenState extends State<MeetingPlaceScreen> {
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+  late KakaoMapController mapController;
+  late Marker marker;
+  Set<Marker> markers = {};
 
   LatLng kangnamUniv = LatLng(
       //위도와 경도 값 지정
       37.277057,
       127.134173);
 
-  static const CameraPosition initialPosition = CameraPosition(
-    target: LatLng(
-        //위도와 경도 값 지정
-        37.277057,
-        127.134173),
-    zoom: 15,
-  );
-
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
-
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -76,16 +74,71 @@ class _MeetingPlaceScreenState extends State<MeetingPlaceScreen> {
             ),
           ),
           Container(
-            height: 500,
-            child: GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition: initialPosition,
-              myLocationEnabled: true,
-              myLocationButtonEnabled: true,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-              },
+            child: Text(
+              pos.toString(),
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
+          ),
+          Stack(
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height - 350,
+                child: KakaoMap(
+                  onMapCreated: ((controller) async {
+                    mapController = controller;
+                    getCurrentLocation();
+
+                    marker = Marker(
+                      markerId: markers.length.toString(),
+                      latLng: await mapController.getCenter(),
+                      width: 30,
+                      height: 44,
+                      offsetX: 15,
+                      offsetY: 44,
+                      infoWindowContent: '',
+                      infoWindowFirstShow: true,
+                      infoWindowRemovable: true,
+                    );
+
+                    markers.add(marker);
+
+                    mapController.addMarker(markers: markers.toList());
+                  }),
+                  onMapTap: ((latLng) {
+                    marker.latLng = latLng;
+                    //pos = getCurrentLocation(); 좌표를 위치로 바꾸어서 텍스트로 내보내기 구현하기
+
+                    pos = latLng;
+                    mapController.panTo(latLng);
+
+                    setState(() {});
+                  }),
+                  currentLevel: 4,
+                  markers: markers.toList(),
+                  center: pos,
+                ),
+              ),
+              Positioned(
+                  top: 5,
+                  right: 5,
+                  child: FloatingActionButton(
+                    mini: true,
+                    onPressed: () {
+                      getCurrentLocation();
+                      marker.latLng = pos;
+
+                      mapController.panTo(pos);
+
+                      setState(() {});
+                    },
+                    child: Icon(
+                      Icons.location_searching,
+                      size: 20,
+                      color: Colors.black,
+                    ),
+                  ))
+            ],
           ),
         ],
       ),
@@ -94,10 +147,7 @@ class _MeetingPlaceScreenState extends State<MeetingPlaceScreen> {
         color: Colors.lightGreen,
         child: TextButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MeetingRecommendScreen()),
-            );
+            _showCheckPlaceDialog(context);
           },
           child: Text(
             '입력 완료',
@@ -108,4 +158,32 @@ class _MeetingPlaceScreenState extends State<MeetingPlaceScreen> {
       ),
     );
   }
+}
+
+void _showCheckPlaceDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          content: Text("입력 완료 되었습니다.\n팀원을 기다려주세요!"),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("수정하기")),
+            TextButton(
+                onPressed: () {
+                  //Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MeetingRecommendScreen()),
+                  );
+                },
+                child: Text("네"))
+          ],
+        );
+      });
 }

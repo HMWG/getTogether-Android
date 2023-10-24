@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_together_android/langdingpage.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:kakao_map_plugin/kakao_map_plugin.dart';
 
 import 'mainpage.dart';
 
@@ -15,6 +16,7 @@ void main() async {
   if (status == LocationPermission.denied) {
     await Geolocator.requestPermission();
   }
+  AuthRepository.initialize(appKey: 'a95a3cc7c4ed405f329e56e3e0a3c23b');
 
   runApp(const MyApp());
 }
