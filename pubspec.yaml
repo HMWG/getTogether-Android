@@ -31,6 +31,26 @@ dependencies:
   flutter:
     sdk: flutter
 
+  table_calendar: ^3.0.9
+
+  # kakaomap_webview: ^0.6.2
+  kakao_map_plugin: ^0.2.1
+  google_maps_flutter: ^2.5.0
+  geolocator: ^10.0.1
+
+  cached_network_image: ^3.2.0
+  intl: ^0.18.1
+  logging: ^1.2.0
+  provider: ^5.0.0-nullsafety.5
+  http: ^1.1.0
+
+  fluttertoast: ^8.2.2
+
+  url_strategy: ^0.2.0-nullsafety.0
+
+  kakao_flutter_sdk: ^1.6.1
+
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

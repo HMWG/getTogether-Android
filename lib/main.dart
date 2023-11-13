@@ -1,8 +1,27 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_together_android/langdingpage.dart';
+import 'package:get_together_android/loginpage.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:kakao_map_plugin/kakao_map_plugin.dart';
 
-void main() {
+import 'mainpage.dart';
+
+void main() async {
+  await initializeDateFormatting();
+  WidgetsFlutterBinding.ensureInitialized();
+  final status = await Geolocator.checkPermission();
+  if (status == LocationPermission.denied) {
+    await Geolocator.requestPermission();
+  }
+  AuthRepository.initialize(appKey: 'a95a3cc7c4ed405f329e56e3e0a3c23b');
+
+  KakaoSdk.init(nativeAppKey: 'd067951ce652e41b934235f5ecd74196');
+
   runApp(const MyApp());
 }
 
@@ -16,7 +35,7 @@ class MyApp extends StatelessWidget {
       title: '헤쳐모여',
       theme:
           ThemeData(primarySwatch: Colors.lightGreen, fontFamily: "notoSans"),
-      home: LandingPage(),
+      home: LoginPage(),
     );
   }
 }

@@ -15,7 +15,7 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   @override
   void initState() {
-    Timer(Duration(seconds: 3), () {
+    Timer(Duration(seconds: 1), () {
       Get.offAll(MainPage());
     });
     super.initState();
@@ -39,7 +39,7 @@ class _LandingPageState extends State<LandingPage> {
                 child: Text("헤쳐모여"),
               ),
               Container(
-                child: Text("모임 관리 어플리케이션"),
+                child: Text("로그인 중.."),
               ),
               Container(
                 height: 100,
