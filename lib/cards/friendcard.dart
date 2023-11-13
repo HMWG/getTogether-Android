@@ -1,10 +1,15 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class FriendCard extends StatefulWidget {
-  int number;
-  FriendCard({Key? key, required this.number}) : super(key: key);
+  int id;
+  String name;
+  String image;
+  FriendCard(
+      {Key? key, required this.id, required this.name, required this.image})
+      : super(key: key);
 
   @override
   State<FriendCard> createState() => _FriendCardState();
@@ -32,21 +37,23 @@ class _FriendCardState extends State<FriendCard> {
               children: [
                 CircleAvatar(
                   radius: 23,
-                  backgroundImage: NetworkImage(
-                      "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDEwMTFfMjYy%2FMDAxNjAyNDE3MTAyNzA5.s9DDYjp80nMnE9hYw_Y6X48ey8j1Tl34KwcfNBkKMMUg.7nTl9qcOXOcI28QZeBKkJ_ysXJYdRSfYJu6DdLKPAmIg.GIF.mynxax%2F963FB7AF-8672-4E9D-B9FD-A0D10AEC34AE-1106-000000C63BF7B273_file.gif&type=sc960_832_gif"),
+                  child: CircularProgressIndicator(),
+                  foregroundImage: CachedNetworkImageProvider(
+                    widget.image,
+                  ),
                 ),
                 SizedBox(
                   width: 10,
                 ),
                 Container(
                   child: Text(
-                    "친구이름 " + (widget.number + 1).toString(),
+                    widget.name,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                 )
               ],
             ),
-            IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz))
+            //IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz))
           ],
         ),
       ),

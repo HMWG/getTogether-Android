@@ -99,10 +99,10 @@ class _MeetingPlaceGoogleScreenState extends State<MeetingPlaceGoogleScreen> {
         color: Colors.lightGreen,
         child: TextButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MeetingRecommendScreen()),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => MeetingRecommendScreen()),
+            // );
           },
           child: Text(
             '입력 완료',

@@ -2,27 +2,65 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:get_together_android/createmeetingscreen/meetingrecommendscreen.dart';
+import 'package:get_together_android/spring.dart';
 import 'package:kakao_map_plugin/kakao_map_plugin.dart';
 
+import '../entity/meetingentity.dart';
+import '../kakaologin.dart';
+import '../mainpage.dart';
+
 class MeetingPlaceScreen extends StatefulWidget {
-  const MeetingPlaceScreen({super.key});
+  int? id;
+  MeetingPlaceScreen({super.key, required this.id});
 
   @override
   State<MeetingPlaceScreen> createState() => _MeetingPlaceScreenState();
 }
 
-late var pos = LatLng(37.277057, 127.134173);
-
-Future<void> getCurrentLocation() async {
-  Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high);
-
-  pos = LatLng(position.latitude, position.longitude);
-}
-
 class _MeetingPlaceScreenState extends State<MeetingPlaceScreen> {
+  LatLng pos = LatLng(37.277057, 127.134173);
+  late Position myPos;
+  bool emptyCheck = true;
+
+  Future initMeetingPlace() async {
+    emptyCheck = await emptyMeetingPlace(
+        LeaveMeeting(memberId: userInfo.id, meetingId: widget.id));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initMeetingPlace().then((_) {
+      setState(() {
+        if (!emptyCheck) _showCheckPlaceDialog(context, widget.id!);
+      });
+    });
+  }
+
+  Future addPlace() async {
+    addMeetingPlace(MeetingPlace(
+        memberId: userInfo.id,
+        meetingId: widget.id,
+        longitude: pos.longitude,
+        latitude: pos.latitude));
+  }
+
+  Future getCurrentLocation() async {
+    myPos = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+  }
+
+  late var addressName = "알수없음";
+  bool isLoading = true;
+
+  Future getMyAddress(LatLng latLng) async {
+    addressName = await getAddress(latLng);
+  }
+
   late KakaoMapController mapController;
   late Marker marker;
   Set<Marker> markers = {};
@@ -50,7 +88,7 @@ class _MeetingPlaceScreenState extends State<MeetingPlaceScreen> {
         children: [
           Container(
             width: double.infinity,
-            padding: EdgeInsets.fromLTRB(40, 40, 0, 40),
+            padding: EdgeInsets.fromLTRB(40, 40, 0, 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -74,20 +112,52 @@ class _MeetingPlaceScreenState extends State<MeetingPlaceScreen> {
             ),
           ),
           Container(
-            child: Text(
-              pos.toString(),
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+            height: 20,
+            child: isLoading
+                ? const RefreshProgressIndicator()
+                : Container(
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    height: 20,
+                    decoration: BoxDecoration(
+                      color: Colors.lightGreen.shade50, // 배경색
+                      borderRadius: BorderRadius.circular(5), // 테두리 모양
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5), // 그림자 색상
+                          spreadRadius: 5, // 그림자 확산 범위
+                          blurRadius: 7, // 그림자 흐림 정도
+                          offset: Offset(0, 3), // 그림자 위치
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      addressName,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+          ),
+          SizedBox(
+            height: 10,
           ),
           Stack(
             children: <Widget>[
               Container(
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height - 350,
+                height: MediaQuery.of(context).size.height - 305,
                 child: KakaoMap(
                   onMapCreated: ((controller) async {
                     mapController = controller;
-                    getCurrentLocation();
+
+                    getCurrentLocation().then((_) {
+                      pos = LatLng(myPos.latitude, myPos.longitude);
+                      getMyAddress(pos).then((_) {
+                        setState(() {
+                          isLoading = false;
+                          mapController.panTo(pos);
+                          marker.latLng = pos;
+                        });
+                      });
+                    });
 
                     marker = Marker(
                       markerId: markers.length.toString(),
@@ -106,11 +176,18 @@ class _MeetingPlaceScreenState extends State<MeetingPlaceScreen> {
                     mapController.addMarker(markers: markers.toList());
                   }),
                   onMapTap: ((latLng) {
+                    isLoading = true;
                     marker.latLng = latLng;
                     //pos = getCurrentLocation(); 좌표를 위치로 바꾸어서 텍스트로 내보내기 구현하기
 
-                    pos = latLng;
                     mapController.panTo(latLng);
+
+                    pos = latLng;
+                    getMyAddress(pos).then((_) {
+                      setState(() {
+                        isLoading = false;
+                      });
+                    });
 
                     setState(() {});
                   }),
@@ -125,10 +202,18 @@ class _MeetingPlaceScreenState extends State<MeetingPlaceScreen> {
                   child: FloatingActionButton(
                     mini: true,
                     onPressed: () {
-                      getCurrentLocation();
-                      marker.latLng = pos;
+                      isLoading = true;
 
-                      mapController.panTo(pos);
+                      getCurrentLocation().then((_) {
+                        pos = LatLng(myPos.latitude, myPos.longitude);
+                        marker.latLng = pos;
+                        mapController.panTo(pos);
+                        getMyAddress(pos).then((_) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                        });
+                      });
 
                       setState(() {});
                     },
@@ -147,7 +232,15 @@ class _MeetingPlaceScreenState extends State<MeetingPlaceScreen> {
         color: Colors.lightGreen,
         child: TextButton(
           onPressed: () {
-            _showCheckPlaceDialog(context);
+            addPlace().then((value) async {
+              if (await checkMeetingPlace(
+                  LeaveMeeting(memberId: userInfo.id, meetingId: widget.id))) {
+                Get.offAll(MainPage());
+                Fluttertoast.showToast(msg: "모든 사람이 장소를 입력했습니다");
+              } else {
+                _showCheckPlaceDialog(context, widget.id!);
+              }
+            });
           },
           child: Text(
             '입력 완료',
@@ -160,7 +253,7 @@ class _MeetingPlaceScreenState extends State<MeetingPlaceScreen> {
   }
 }
 
-void _showCheckPlaceDialog(BuildContext context) {
+void _showCheckPlaceDialog(BuildContext context, int meetingId) {
   showDialog(
       context: context,
       barrierDismissible: false,
@@ -170,17 +263,17 @@ void _showCheckPlaceDialog(BuildContext context) {
           actions: [
             TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  deleteMeetingPlace(LeaveMeeting(
+                          memberId: userInfo.id, meetingId: meetingId))
+                      .then((value) {
+                    Get.back();
+                    Get.off(MeetingPlaceScreen(id: meetingId));
+                  });
                 },
                 child: Text("수정하기")),
             TextButton(
                 onPressed: () {
-                  //Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MeetingRecommendScreen()),
-                  );
+                  Get.offAll(MainPage());
                 },
                 child: Text("네"))
           ],

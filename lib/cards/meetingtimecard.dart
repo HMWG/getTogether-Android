@@ -2,6 +2,12 @@ import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../createmeetingscreen/meetingtimescreen.dart';
+import '../entity/meetingentity.dart';
+import '../kakaologin.dart';
+import '../spring.dart';
 
 class MeetingTimeCard extends StatefulWidget {
   const MeetingTimeCard({super.key});
@@ -11,6 +17,30 @@ class MeetingTimeCard extends StatefulWidget {
 }
 
 class _MeetingTimeCardState extends State<MeetingTimeCard> {
+  bool emptyCheck = true;
+  List<DateTime> getDateTime = [];
+  bool isLoading = true;
+  String meetingDate = "";
+
+  // Future initMeetingDate() async {
+  //   emptyCheck = await emptyMeetingTime(
+  //       LeaveMeeting(memberId: userInfo.id, meetingId: widget.id));
+  //   getDateTime = await getMeetingFinalDate(
+  //       LeaveMeeting(memberId: userInfo.id, meetingId: widget.id));
+  // }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   initMeetingDate().then((_) {
+  //     setState(() {
+  //       meetingDate = DateFormat('yyyy년', 'ko').format(getDateTime.first);
+  //       isLoading = false;
+  //       if (!emptyCheck) showCheckTimeDialog(context, widget.id!);
+  //     });
+  //   });
+  // }
+
   var dayOfTheWeek = ['월', '화', '수'];
   var day = [11, 12, 13];
   var meetingTime = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
@@ -118,6 +148,14 @@ class _MeetingTimeCardState extends State<MeetingTimeCard> {
         children: [
           Column(
             children: [
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+                child: Text(
+                  meetingDate,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

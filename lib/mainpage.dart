@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get_together_android/kakaologin.dart';
 import 'package:get_together_android/mainscreen/friendsscreen.dart';
 import 'package:get_together_android/mainscreen/homescreen.dart';
 import 'package:get_together_android/mainscreen/managescreen.dart';
+import 'package:get_together_android/mainscreen/noticescreen.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -16,7 +18,7 @@ class _MainPageState extends State<MainPage> {
   List<BottomNavigationBarItem> bottomItems = [
     BottomNavigationBarItem(label: "친구", icon: Icon(Icons.people_alt)),
     BottomNavigationBarItem(label: "홈", icon: Icon(Icons.home)),
-    BottomNavigationBarItem(label: "더보기", icon: Icon(Icons.more_horiz)),
+    BottomNavigationBarItem(label: "알림", icon: Icon(Icons.notifications)),
   ];
 
   // List pages = [
@@ -45,7 +47,7 @@ class _MainPageState extends State<MainPage> {
   List pages = [
     FriendsScreen(),
     HomeScreen(),
-    ManageScreen(),
+    NoticeScreen(),
   ];
 
   // 앱바 텍스트
